@@ -527,7 +527,8 @@ class Hipay extends PaymentModule
 		$allow_url_fopen = ini_get('allow_url_fopen');
 		$openssl = extension_loaded('openssl');
 		$curl = extension_loaded('curl');
-		$ping = ($allow_url_fopen && $openssl && $fd = fsockopen('payment.hipay.com', 443) && fclose($fd));
+		$fd = fsockopen('payment.hipay.com', 443);
+		$ping = ($fd && fclose($fd) && $allow_url_fopen && $openssl);
 		$online = (in_array(Tools::getRemoteAddr(), array('127.0.0.1', '::1')) ? false : true);
 		$categories = true;
 		$categoryRetrieval = true;
